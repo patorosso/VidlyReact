@@ -4,10 +4,26 @@ import { getMovies } from "../services/fakeMovieService";
 class Movies extends Component {
   state = {
     movies: getMovies(),
+    count: getMovies().length,
   };
+
+  handleOnDelete = (movie) => {
+    const movies = this.state.movies.filter((m) => m._id !== movie._id);
+    this.setState({ movies });
+    const count = this.state.count - 1;
+    this.setState({ count });
+  };
+
   render() {
     return (
       <React.Fragment>
+        {this.state.count !== 0 ? (
+          <div>Showing {this.state.count} movies in the database.</div>
+        ) : (
+          <div>There are no movies on the db.</div>
+        )}
+
+        <hr></hr>
         <table class="table">
           <thead>
             <tr>
@@ -24,6 +40,14 @@ class Movies extends Component {
                 <td>{movie.genre.name}</td>
                 <td>{movie.numberInStock}</td>
                 <td>{movie.dailyRentalRate}</td>
+                <td>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => this.handleOnDelete(movie)}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
