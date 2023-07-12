@@ -55,18 +55,15 @@ class Movies extends Component {
     this.setState({ sortColumn });
   };
 
-  render() {
+  getPagedDate = () => {
     const {
       pageSize,
       currentPage,
-      count,
       movies: allMovies,
-      genres,
       selectedGenre,
       sortColumn,
     } = this.state;
 
-    if (count === 0) return <p>There are no movies in the db.</p>;
     const filtered =
       selectedGenre && selectedGenre._id // si no tiene id se va porque es el de All Genres
         ? allMovies.filter((c) => c.genre._id === selectedGenre._id)
@@ -75,6 +72,17 @@ class Movies extends Component {
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
     const movies = paginate(sorted, currentPage, pageSize);
+
+    return { totalCount: filtered.length, data: movies };
+  };
+
+  render() {
+    const { pageSize, currentPage, count, genres, selectedGenre, sortColumn } =
+      this.state;
+
+    if (count === 0) return <p>There are no movies in the db.</p>;
+
+    const { totalCount, data: movies } = this.getPagedDate();
 
     return (
       <div className="row m-2">
@@ -95,7 +103,7 @@ class Movies extends Component {
             onSort={this.handleOnSort}
           />
           <Pagination
-            itemsCount={filtered.length}
+            itemsCount={totalCount}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={this.handleOnPageChange}

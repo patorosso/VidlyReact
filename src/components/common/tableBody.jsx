@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-//import Like from "./like";
 import _ from "lodash";
 
 class TableBody extends Component {
