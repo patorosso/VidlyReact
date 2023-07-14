@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import _ from "lodash";
 
 class TableBody extends Component {
@@ -24,6 +25,11 @@ class TableBody extends Component {
                 {this.renderCell(item, column)}
               </td>
             ))}
+            <td>
+              <Link to={`${item._id}`} style={{ textDecoration: "none" }}>
+                Details
+              </Link>
+            </td>
           </tr>
         ))}
       </tbody>

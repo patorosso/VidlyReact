@@ -36,6 +36,7 @@ class TableHeader extends Component {
               {column.name} {this.renderSortIcon(column)}
             </th>
           ))}
+          <th>Details</th>
         </tr>
       </thead>
     );

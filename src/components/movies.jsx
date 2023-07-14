@@ -36,6 +36,7 @@ class Movies extends Component {
   };
 
   handleOnLike = (movie) => {
+    console.log("likeado", movie.liked);
     const movies = [...this.state.movies];
     const index = movies.indexOf(movie);
     movies[index] = { ...movies[index] };
@@ -85,31 +86,33 @@ class Movies extends Component {
     const { totalCount, data: movies } = this.getPagedDate();
 
     return (
-      <div className="row m-2">
-        <div className="col-2">
-          <ListGroup
-            items={genres}
-            onItemSelect={this.handleOnGenreSelect}
-            selectedItem={selectedGenre}
-          />
+      <React.Fragment>
+        <div className="row m-2">
+          <div className="col-2">
+            <ListGroup
+              items={genres}
+              onItemSelect={this.handleOnGenreSelect}
+              selectedItem={selectedGenre}
+            />
+          </div>
+          <div className="col">
+            <div>There are currently a total of {count} movies in the db.</div>
+            <MoviesTable
+              movies={movies}
+              sortColumn={sortColumn}
+              onLike={this.handleOnLike}
+              onDelete={this.handleOnDelete}
+              onSort={this.handleOnSort}
+            />
+            <Pagination
+              itemsCount={totalCount}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={this.handleOnPageChange}
+            />
+          </div>
         </div>
-        <div className="col">
-          <div>There are currently a total of {count} movies in the db.</div>
-          <MoviesTable
-            movies={movies}
-            sortColumn={sortColumn}
-            onLike={this.handleOnLike}
-            onDelete={this.handleOnDelete}
-            onSort={this.handleOnSort}
-          />
-          <Pagination
-            itemsCount={totalCount}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={this.handleOnPageChange}
-          />
-        </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
