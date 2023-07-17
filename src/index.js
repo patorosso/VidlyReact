@@ -15,7 +15,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    //errorElement: <ErrorPage />,
+    //errorElement: <ErrorPage />, podemos tener para mostrar una url inexistente
     children: [
       {
         path: "movies",
